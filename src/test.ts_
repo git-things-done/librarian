@@ -1,0 +1,42 @@
+// NOTE renamed .ts_ because `ncc` tries to bundle this
+// even though we don’t ask it to which leads to compilation failure
+//FIXME
+
+import { assertEquals } from "https://deno.land/std@0.110.0/testing/asserts.ts"
+import { categorize } from '../dist/index.js'
+import { process } from './process.ts'
+
+Deno.test("#1", () => {
+  const input = [{
+    id: 1,
+    body: "# lol"
+  }]
+  const upstream = ["diem"]
+  const output = categorize(input, new Set(upstream))
+  assertEquals(output, new Set(["diem", "lol"]))
+})
+
+Deno.test("#2", () => {
+  const input = [{
+    id: 1,
+    body: "# lol"
+  }]
+  const upstream = ["diem", "lol"]
+  const output = categorize(input, new Set(upstream))
+  assertEquals(output, new Set(["diem", "lol"]))
+})
+
+Deno.test('#3', () => {
+  const input = [{
+    id: 1,
+    body: "# lol"
+  }]
+  const upstream = new Set(["diem"])
+  const output = categorize(input, upstream)
+
+  assertEquals(output, new Set(["lol", "diem"]))
+
+  const { append } = process(upstream, output)
+
+  assertEquals(append, ["lol"])
+})

@@ -1,0 +1,22 @@
+name: “Librarian” for Git Things Done
+description: Automatically labels your GitTD tickets based on their content.
+inputs:
+  token:
+    description: Usually `secrets.GITHUB_TOKEN`.
+    default: ${{ github.token }}
+  today:
+    description: >
+      Today’s entry issue number.
+       If unset we use `$GTD_TODAY`.
+    required: false
+outputs:
+  labels:
+    description: The full set of labels for this ticket.
+  append:
+    description: The new labels found during this run.
+  remove:
+    description: The labels that should be removed after this run.
+runs:
+  using: docker
+  image: Dockerfile
+  # ^^ because we want node 16 so we can use modern features
