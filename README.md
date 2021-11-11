@@ -34,11 +34,11 @@ on:
       - edited
       - deleted
 jobs:
-  parse:
+  librarian:
     runs-on: ubuntu-latest
     if: github.event.issue_comment.user.login != 'github-actions[bot]'
     steps:
-      - uses: git-things-done/librarian@master
+      - uses: git-things-done/librarian@v1
         id: labels
         with:
           today: ${{ github.event.issue.number }}
