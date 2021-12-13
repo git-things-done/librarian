@@ -17,6 +17,9 @@ outputs:
   remove:
     description: The labels that should be removed after this run.
 runs:
-  using: docker
-  image: Dockerfile
-  # ^^ because we want node 16 so we can use modern features
+  using: node16
+  main: dist/index.js
+
+branding:
+  icon: check-square
+  color: green
