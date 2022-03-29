@@ -10,23 +10,29 @@ export async function categorize(comments: IssueComment[], upstream: Set<string>
 
   for (const comment of comments) {
     if (!comment.body) continue
-    for (const item of lexer(comment.body)) {
+    comment: for (const item of lexer(comment.body)) {
       if (item.type !== 'heading') continue
       const squished = squish(item.text)
       switch (squished) {
+      case 'fortune':
+        if (!(await getRxns(comment.id)).has('+1')) {
+          break comment;
+        } else {
+          // fall through
+        }
       case 'inspiration':
+      case 'realization':
       case 'journal':
       case 'audit':
       case 'lol':
         rv.add(squished)
-        break
-      case 'fortune':
-        if ((await getRxns(comment.id)).has('+1')) {
-          rv.add('good-fortune')
-        }
+        break comment;
+      default:
+        break comment;
       }
     }
   }
+
   return rv
 }
 
