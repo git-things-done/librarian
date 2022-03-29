@@ -10,8 +10,12 @@ export async function categorize(comments: IssueComment[], upstream: Set<string>
 
   for (const comment of comments) {
     if (!comment.body) continue
+    let foundHeading = false
     for (const item of lexer(comment.body)) {
-      if (item.type !== 'heading') continue
+      if (item.type !== 'heading') {
+        if (foundHeading) break
+        continue
+      }
       const squished = squish(item.text)
       switch (squished) {
       case 'inspiration':

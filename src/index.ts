@@ -1,12 +1,14 @@
 import * as github from '@actions/github'
 import { getInput, setOutput } from '@actions/core'
 import { categorize } from './categorize().js'
+import { IssueCommentEvent } from '@octokit/webhooks-definitions/schema'
 
 const slug = process.env.GITHUB_REPOSITORY!
 const [owner, repo] = slug.split('/')
 const issue_number = parseInt((getInput('today') || process.env.GTD_TODAY)!)
 const token = getInput('token')!
-const octokit = github.getOctokit(token)
+const octokit = github.getOctokit(token);
+const comment_id = (github.context.payload as IssueCommentEvent).comment.id
 
 const comments = await octokit.rest.issues.listComments({
   owner,
