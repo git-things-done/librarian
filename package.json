@@ -5,7 +5,7 @@
   },
   "dependencies": {
     "@octokit/webhooks-definitions": "^3.67.3",
-    "marked": "^4.0.0"
+    "marked": "^4.0.13"
   },
   "devDependencies": {
     "@actions/core": "^1.6.0",
