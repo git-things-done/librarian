@@ -8,7 +8,7 @@
     "marked": "^4.0.0"
   },
   "devDependencies": {
-    "@actions/core": "^1.6.0",
+    "@actions/core": "^1.10.0",
     "@actions/github": "^5.0.0",
     "@types/marked": "^3.0.2",
     "@types/node": "^16.11.6",
